@@ -1,2 +1,2 @@
-# Packages are added deliberately as each learning phase begins.
-# Phase 1 will add OpenCV; Phase 2 will add Ultralytics and PyTorch.
+# Phase 1: video input, frame processing, drawing, and video output.
+opencv-python==4.13.0.92
