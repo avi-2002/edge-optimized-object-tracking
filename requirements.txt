@@ -1,0 +1,2 @@
+# Packages are added deliberately as each learning phase begins.
+# Phase 1 will add OpenCV; Phase 2 will add Ultralytics and PyTorch.

@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.coverage
+
+# Editors and operating systems
+.DS_Store
+.vscode/
+.idea/
+
+# Data, trained weights, and generated media
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+models/*
+!models/.gitkeep
+outputs/*
+!outputs/.gitkeep
+
+# Experiment and deployment secrets
+.env
+secrets.toml
