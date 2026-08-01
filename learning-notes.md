@@ -111,6 +111,36 @@ python -m edge_tracker.analyze_video \
 
 <!-- How would I count only cars? How can I stop an ID switch from creating an extra count? -->
 
+## Phase 5 - Custom model training
+
+### What I prepared
+
+- A traffic dataset configuration with four classes: `person`, `car`, `bus`, and `truck`.
+- A dataset validator that checks image/label pairs and YOLO bounding-box values before training.
+- Scripts to fine-tune YOLO and evaluate the resulting `best.pt` model.
+
+### Core ideas
+
+- **Transfer learning** starts from a pretrained model and adapts it to a smaller, task-specific dataset.
+- A YOLO label line is `class_id x_center y_center width height`; box values are normalized from 0 to 1.
+- Keep train, validation, and test images separate. Split by source video, not by neighboring frames, to prevent data leakage.
+- Precision answers “when the model predicts an object, how often is it right?” Recall answers “of the real objects, how many did it find?” mAP summarizes detection quality across confidence thresholds.
+- A model that performs very well on training images but poorly on validation images is overfitting.
+
+### Evidence to add
+
+<!-- After collecting and annotating images, run this command and paste its output. -->
+
+```bash
+python -m edge_tracker.validate_dataset --data data/traffic.yaml
+```
+
+<!-- Record dataset sizes, class balance, training settings, mAP50-95, mAP50, and one common error made by the model. -->
+
+### Questions I still have
+
+<!-- Why should videos, rather than individual frames, define the data split? How does mAP50 differ from mAP50-95? -->
+
 ## Phase 2 - Object detection
 
 ### Concepts to explain after the exercise
