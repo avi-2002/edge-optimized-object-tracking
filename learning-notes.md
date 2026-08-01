@@ -77,6 +77,40 @@ python -m edge_tracker.track_bytetrack \
 
 <!-- Why does IoU matching fail when objects cross paths? How does a Kalman filter help ByteTrack predict the next box location? -->
 
+## Phase 4 - Trajectories and video analytics
+
+### What I built
+
+- A trajectory: the recent centroid positions of each tracked ID, drawn as a line behind the object.
+- A horizontal virtual counting line, placed at a configurable fraction of the video height.
+- Upward and downward crossing counters, plus a rolling inference-FPS metric.
+
+### Core ideas
+
+- A bounding-box centroid is its center point: `((x1 + x2) / 2, (y1 + y2) / 2)`.
+- A trajectory is a short history of those center points; it shows an object's motion path.
+- A crossing event occurs when the centroid moves from one side of the counting line to the other.
+- Each `(track ID, direction)` pair is counted only once. This prevents a stationary object near the line from being counted repeatedly.
+- **Inference FPS** measures how quickly the model-and-tracker pipeline processes frames. It is different from the video file's FPS, which is the original playback rate.
+- A unique track ID is an approximation, not a guaranteed real-world count: tracker ID switches can overcount and missed detections can undercount.
+
+### Evidence to add
+
+```bash
+python -m edge_tracker.analyze_video \
+  --input data/raw/my-video.mp4 \
+  --output outputs/my-video-analytics.mp4 \
+  --classes person car bus truck \
+  --line-fraction 0.50 \
+  --device cpu
+```
+
+<!-- Record the final unique-ID, up, and down totals. Did the line sit at a meaningful place in your video? -->
+
+### Questions I still have
+
+<!-- How would I count only cars? How can I stop an ID switch from creating an extra count? -->
+
 ## Phase 2 - Object detection
 
 ### Concepts to explain after the exercise
