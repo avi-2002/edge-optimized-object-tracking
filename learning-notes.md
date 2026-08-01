@@ -40,6 +40,24 @@ Input metadata: 2160x3840, 59.94 FPS, 651 frames, about 10.86 seconds>
 
 <!-- Add questions here. -->
 
+## Phase 2 - Object detection
+
+### Concepts to explain after the exercise
+
+- Detection answers “what objects are in this frame, and where are they?”
+- A bounding box uses `(x1, y1, x2, y2)`: left, top, right, and bottom pixel positions.
+- A class ID is a numeric label; the model maps it to a name such as `person` or `car`.
+- Confidence is the model's estimated certainty, not a guarantee of correctness.
+- A detector processes each frame independently. It does not yet know that a person in frame 10 is the same person in frame 11.
+
+### Evidence to add
+
+<!-- Record your video, model, confidence threshold, device, and example true/false detections. -->
+
+### Questions I still have
+
+<!-- Add questions here. -->
+
 ## Phase 3 - Multi-object tracking
 
 ### What I built
@@ -113,11 +131,12 @@ python -m edge_tracker.analyze_video \
 
 ## Phase 5 - Custom model training
 
-### What I prepared
+### What I completed
 
-- A traffic dataset configuration with four classes: `person`, `car`, `bus`, and `truck`.
-- A dataset validator that checks image/label pairs and YOLO bounding-box values before training.
-- Scripts to fine-tune YOLO and evaluate the resulting `best.pt` model.
+- Prepared a BDD100K subset with 500 training and 150 validation images for `person`, `car`, `bus`, and `truck`.
+- Converted BDD100K JSON corner boxes to YOLO normalized label files and passed dataset validation.
+- Fine-tuned pretrained `yolo11n.pt` for 20 epochs with batch size 2 on CPU.
+- Loaded the resulting `best.pt` successfully and evaluated the custom model.
 
 ### Core ideas
 
@@ -127,34 +146,26 @@ python -m edge_tracker.analyze_video \
 - Precision answers “when the model predicts an object, how often is it right?” Recall answers “of the real objects, how many did it find?” mAP summarizes detection quality across confidence thresholds.
 - A model that performs very well on training images but poorly on validation images is overfitting.
 
-### Evidence to add
+### Evidence
 
-<!-- After collecting and annotating images, run this command and paste its output. -->
-
-```bash
-python -m edge_tracker.validate_dataset --data data/traffic.yaml
+```text
+Dataset validation: passed
+Training images: 500
+Validation images: 150
+Model: yolo11n.pt (pretrained)
+Training: 20 epochs, batch size 2, CPU
+Final validation precision: 45.38%
+Final validation recall: 29.79%
+Final validation mAP50: 31.10%
+Final validation mAP50-95: 17.03%
+Saved model: runs/detect/runs/train/traffic_yolo11n/weights/best.pt
 ```
 
-<!-- Record dataset sizes, class balance, training settings, mAP50-95, mAP50, and one common error made by the model. -->
+### Interpretation
+
+- `mAP50` uses a lenient 0.50 IoU match threshold; `mAP50-95` averages stricter thresholds from 0.50 to 0.95, so it is normally lower.
+- This first model is a baseline, not a final accuracy claim. The low recall means it misses many real objects; more varied images, better class balance, more epochs, and error analysis are the next improvements.
 
 ### Questions I still have
 
 <!-- Why should videos, rather than individual frames, define the data split? How does mAP50 differ from mAP50-95? -->
-
-## Phase 2 - Object detection
-
-### Concepts to explain after the exercise
-
-- Detection answers “what objects are in this frame, and where are they?”
-- A bounding box uses `(x1, y1, x2, y2)`: left, top, right, and bottom pixel positions.
-- A class ID is a numeric label; the model maps it to a name such as `person` or `car`.
-- Confidence is the model's estimated certainty, not a guarantee of correctness.
-- A detector processes each frame independently. It does not yet know that a person in frame 10 is the same person in frame 11.
-
-### Evidence to add
-
-<!-- Record your video, model, confidence threshold, device, and example true/false detections. -->
-
-### Questions I still have
-
-<!-- Add questions here. -->
