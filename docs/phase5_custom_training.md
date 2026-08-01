@@ -24,6 +24,19 @@ class_id x_center y_center width height
 
 All four box values are normalized from 0 to 1. Example: `1 0.50 0.60 0.20 0.15` is a `car` whose box is centered at 50% width and 60% height.
 
+## BDD100K conversion
+
+The downloaded BDD100K package stores annotations as one JSON file per image. `prepare_bdd100k.py` keeps only `person`, `car`, `bus`, and `truck`, maps them to this project's class IDs, converts the corner boxes to normalized YOLO labels, and copies a random subset.
+
+```bash
+python -m edge_tracker.prepare_bdd100k \
+  --source /Users/avinashraval/Downloads/bdd100k \
+  --train-count 500 \
+  --val-count 150
+```
+
+Use `--dry-run` first to confirm the source without copying. The 500/150 subset is appropriate for a first CPU training experiment; increase it only after completing one full training/evaluation cycle.
+
 ## Recommended learning workflow
 
 1. Collect 150-300 varied frames from videos resembling your target scene. Include night/day, near/far objects, partial occlusion, and negative images with no target objects.
