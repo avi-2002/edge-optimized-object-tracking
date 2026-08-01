@@ -1,6 +1,7 @@
 # Phase 1: video input, frame processing, drawing, and video output.
 numpy==1.26.4
-opencv-python==4.10.0.84
+# Server-safe OpenCV build: video processing without desktop GUI / libGL dependencies.
+opencv-python-headless==4.10.0.84
 
 # Phase 2: pretrained object detection.
 lap==0.5.12
