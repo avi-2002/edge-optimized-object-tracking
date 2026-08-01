@@ -10,6 +10,8 @@ streamlit run app.py
 
 Open the local URL shown in the terminal, upload a short traffic video, choose the model and settings, then download the annotated MP4.
 
+For 4K/60 FPS input, choose the **Fast** profile. It halves output resolution, reduces YOLO input to 416 pixels, and processes every second frame. The output retains approximately the original duration but has a lower frame rate, which is an intentional speed/temporal-smoothness trade-off.
+
 ## Deployment checklist
 
 1. Keep `requirements.txt`, `app.py`, `src/`, `.streamlit/config.toml`, and `assets/traffic_yolo11n.pt` in Git.
