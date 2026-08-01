@@ -4,6 +4,8 @@ opencv-python==4.10.0.84
 
 # Phase 2: pretrained object detection.
 lap==0.5.12
+onnx>=1.16,<2
+onnxruntime>=1.18,<2
 torch==2.1.0
 torchvision==0.16.0
 ultralytics==8.4.107
