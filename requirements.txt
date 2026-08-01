@@ -3,6 +3,7 @@ numpy==1.26.4
 opencv-python==4.10.0.84
 
 # Phase 2: pretrained object detection.
+lap==0.5.12
 torch==2.1.0
 torchvision==0.16.0
 ultralytics==8.4.107
