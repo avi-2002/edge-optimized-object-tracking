@@ -12,12 +12,12 @@ A learning-first computer-vision project that detects objects in video, assigns 
 ## Roadmap
 
 - [x] Phase 0 - repository and Python environment
-- [ ] Phase 1 - OpenCV video fundamentals
-- [ ] Phase 2 - pretrained object detection
-- [ ] Phase 3 - ByteTrack multi-object tracking
-- [ ] Phase 4 - counting, trajectories, and performance metrics
-- [ ] Phase 5 - custom training and evaluation
-- [ ] Phase 6 - ONNX export and edge optimization
+- [x] Phase 1 - OpenCV video fundamentals
+- [x] Phase 2 - pretrained object detection
+- [x] Phase 3 - ByteTrack multi-object tracking
+- [x] Phase 4 - counting, trajectories, and performance metrics
+- [x] Phase 5 - custom training and evaluation
+- [x] Phase 6 - ONNX export and edge optimization
 - [ ] Phase 7 - Streamlit application and deployment
 
 ## Repository layout

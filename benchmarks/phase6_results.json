@@ -1,0 +1,23 @@
+{
+  "setup": {
+    "image": "data/traffic/images/val/b22f174d-a19c875e.jpg",
+    "imgsz": 640,
+    "warmup_runs": 5,
+    "measured_runs": 30,
+    "device": "cpu"
+  },
+  "pytorch": {
+    "model_size_mib": 5.196,
+    "mean_latency_ms": 36.069,
+    "median_latency_ms": 35.657,
+    "p95_latency_ms": 39.036,
+    "mean_fps": 27.725
+  },
+  "onnx": {
+    "model_size_mib": 10.078,
+    "mean_latency_ms": 43.567,
+    "median_latency_ms": 43.03,
+    "p95_latency_ms": 47.998,
+    "mean_fps": 22.953
+  }
+}

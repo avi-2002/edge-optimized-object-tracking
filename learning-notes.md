@@ -169,3 +169,32 @@ Saved model: runs/detect/runs/train/traffic_yolo11n/weights/best.pt
 ### Questions I still have
 
 <!-- Why should videos, rather than individual frames, define the data split? How does mAP50 differ from mAP50-95? -->
+
+## Phase 6 - ONNX export and edge benchmarking
+
+### What I completed
+
+- Exported the trained PyTorch model (`best.pt`) to a portable ONNX model (`traffic_yolo11n.onnx`).
+- Measured both models on the same validation image at 640×640 resolution, using 5 warm-up runs and 30 measured CPU runs.
+- Compared model size, latency, and throughput instead of assuming ONNX would automatically be faster.
+
+### Benchmark evidence
+
+| Metric | PyTorch `.pt` | ONNX `.onnx` |
+| --- | ---: | ---: |
+| Model size | 5.196 MiB | 10.078 MiB |
+| Mean latency | 36.069 ms | 43.567 ms |
+| Median latency | 35.657 ms | 43.030 ms |
+| P95 latency | 39.036 ms | 47.998 ms |
+| Mean throughput | 27.725 FPS | 22.953 FPS |
+
+### Interpretation
+
+- In this specific M1 CPU benchmark, PyTorch was faster and smaller than the FP32 ONNX export.
+- ONNX still matters because it is portable: it can run in ONNX Runtime and supports deployment on systems that do not use PyTorch.
+- This is a single-image inference benchmark. It does not measure video decoding, ByteTrack association, or Streamlit UI overhead.
+- The next optimization experiment is INT8 quantization. It may reduce model size and improve speed on compatible hardware, but its detection accuracy must be revalidated.
+
+### Questions I still have
+
+<!-- Why is ONNX slower on this machine? What changes when I benchmark ONNX on Windows, Linux, or an edge accelerator? -->
