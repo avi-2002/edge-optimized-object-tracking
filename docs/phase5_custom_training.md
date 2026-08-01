@@ -44,7 +44,7 @@ Use `--dry-run` first to confirm the source without copying. The 500/150 subset 
 3. Keep the train/validation split at the **video level**, not random adjacent frames. Otherwise nearly identical frames leak into validation and produce misleading metrics.
 4. Run `python -m edge_tracker.validate_dataset --data data/traffic.yaml` until it passes.
 5. Train first with 50 epochs and batch size 4 on this M1 system. Reduce `--batch` if memory fails.
-6. Read the saved `results.png`, then evaluate `best.pt` using `evaluate_custom.py`.
+6. Read the saved `results.png`, then evaluate `best.pt` using `evaluate_custom.py`. It is saved under `runs/train/<run name>/weights/best.pt` for new runs.
 7. Compare custom and pretrained models on an untouched video. Report mAP, FPS, model size, common false positives, and common missed objects.
 
 ## Concepts to study

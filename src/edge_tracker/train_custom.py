@@ -13,6 +13,13 @@ from ultralytics import YOLO
 
 from edge_tracker.detect_video import choose_device
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+
+def from_project_root(path: Path) -> Path:
+    """Resolve normal relative CLI paths independently of the shell's CWD."""
+    return path if path.is_absolute() else PROJECT_ROOT / path
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -25,16 +32,19 @@ def main() -> None:
     parser.add_argument("--name", default="traffic_yolo11n")
     args = parser.parse_args()
 
-    if not args.data.exists():
-        raise FileNotFoundError(f"Dataset configuration not found: {args.data}")
-    model = YOLO(str(args.model))
+    data_path = from_project_root(args.data)
+    model_path = from_project_root(args.model)
+    if not data_path.exists():
+        raise FileNotFoundError(f"Dataset configuration not found: {data_path}")
+    model = YOLO(str(model_path))
     results = model.train(
-        data=str(args.data),
+        data=str(data_path),
         epochs=args.epochs,
         imgsz=args.imgsz,
         batch=args.batch,
         device=choose_device(args.device),
-        project="runs/train",
+        # An absolute path prevents Ultralytics from nesting output under runs/detect.
+        project=str(PROJECT_ROOT / "runs" / "train"),
         name=args.name,
         pretrained=True,
         plots=True,
