@@ -1,5 +1,7 @@
 # Edge-Optimized Object Detection & Tracking
 
+Link :- https://edge-optimized-object-tracking-ar-project-one.streamlit.app/
+
 A learning-first computer-vision project that detects objects in video, assigns stable IDs over time, measures simple analytics, and compares edge-friendly inference options.
 
 ## Project goals
